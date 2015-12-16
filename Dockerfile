@@ -2,7 +2,7 @@ FROM danielak/ubuntu-trusty
 
 # Global Variables
 # Making one change to RBRANCH toggles this from pre-release (R-devel) to base (current R)
-ENV RBRANCH base-prerelease/
+ENV RBRANCH base/
 ENV RVERSION R-latest
 ENV CRANURL https://cran.rstudio.com/src/
 
