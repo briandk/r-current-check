@@ -29,7 +29,11 @@ CMD [ \
     "R", \
     "--vanilla", \
     "-e", \
-    "devtools::install('/package')" \
+    "devtools::install('/package'); \
+        options(repos = c(CRAN='http://cran.rstudio.com')); \
+        devtools::check( \
+          '/package', \
+          cran = TRUE, \
+          check_version = TRUE \
+        )" \
 ]
-
-# "devtools::install('/package'); devtools::check('/package', cran = TRUE, check_version = TRUE)"
