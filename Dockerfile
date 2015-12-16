@@ -22,3 +22,14 @@ RUN wget "$CRANURL$RVERSION.tar.gz" && \
 
 # Install Devtools
 RUN R --vanilla -e "install.packages('devtools', dep = TRUE, repos = 'http://cran.rstudio.com')"
+
+# Check Package
+RUN mkdir -p /package
+CMD [ \
+    "R", \
+    "--vanilla", \
+    "-e", \
+    "devtools::install('/package')" \
+]
+
+# "devtools::install('/package'); devtools::check('/package', cran = TRUE, check_version = TRUE)"
