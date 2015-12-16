@@ -1,8 +1,10 @@
 FROM danielak/ubuntu-trusty
 
 # Global Variables
-ENV RVERSION R-3.2.3
-ENV CRANURL https://cran.r-project.org/src/base/R-3/
+# Making one change to RBRANCH toggles this from pre-release (R-devel) to base (current R)
+ENV RBRANCH base-prerelease/
+ENV RVERSION R-latest
+ENV CRANURL https://cran.rstudio.com/src/
 
 # Add R Repository for CRAN packages
 RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E084DAB9
@@ -13,9 +15,10 @@ RUN apt-get update && apt-get build-dep --assume-yes \
     r-cran-rgl
 
 # Build and install R from source
-RUN wget "$CRANURL$RVERSION.tar.gz" && \
-    tar -zxvf $RVERSION.tar.gz && \
-    cd $RVERSION && \
+RUN wget "$CRANURL$RBRANCH$RVERSION.tar.gz" && \
+    mkdir /$RVERSION && \
+    tar --strip-components 1 -zxvf $RVERSION.tar.gz  -C /$RVERSION && \
+    cd /$RVERSION && \
     ./configure --enable-R-shlib && \
     make && \
     make install
