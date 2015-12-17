@@ -2,9 +2,8 @@ FROM danielak/ubuntu-trusty
 
 # Global Variables
 # Making one change to RBRANCH toggles this from pre-release (R-devel) to base (current R)
-ENV RBRANCH base-prerelease/
-ENV RVERSION R-latest
-ENV CRANURL https://cran.rstudio.com/src/
+ENV RVERSION R-devel
+ENV CRANURL https://stat.ethz.ch/R/daily/
 
 # Add R Repository for CRAN packages
 RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E084DAB9
@@ -15,7 +14,7 @@ RUN apt-get update && apt-get build-dep --assume-yes \
     r-cran-rgl
 
 # Build and install R from source
-RUN wget "$CRANURL$RBRANCH$RVERSION.tar.gz" && \
+RUN wget "$CRANURL$RVERSION.tar.gz" && \
     mkdir /$RVERSION && \
     tar --strip-components 1 -zxvf $RVERSION.tar.gz  -C /$RVERSION && \
     cd /$RVERSION && \
