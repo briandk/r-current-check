@@ -1,4 +1,4 @@
-FROM danielak/ubuntu-trusty
+FROM danielak/pandoc:latest
 
 # Global Variables
 # Making one change to RBRANCH toggles this from pre-release (R-devel) to base (current R)
@@ -11,7 +11,8 @@ RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E084DAB9
 # Get the system ready to build R from source
 RUN apt-get update && apt-get build-dep --assume-yes \
     r-base \
-    r-cran-rgl
+    r-cran-rgl \
+    wget
 
 # Build and install R from source
 RUN wget "$CRANURL$RVERSION.tar.gz" && \
@@ -27,6 +28,7 @@ RUN R --vanilla -e "install.packages('devtools', dep = TRUE, repos = 'http://cra
 
 # Check Package
 RUN mkdir -p /package
+RUN R --version
 CMD [ \
     "R", \
     "--vanilla", \
