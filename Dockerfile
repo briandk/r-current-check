@@ -12,7 +12,8 @@ RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E084DAB9
 # Get the system ready to build R from source
 RUN apt-get update && apt-get build-dep --assume-yes \
     r-base \
-    r-cran-rgl
+    r-cran-rgl \
+    wget
 
 # Build and install R from source
 RUN wget "$CRANURL$RBRANCH$RVERSION.tar.gz" && \
